@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список людей</title>
+</head>
+<body>
+<h1 style="margin-top: 100px; margin-left: 100px">Список людей</h1>
+<div style="margin-left: 100px; margin-top: 15px; border-width:3px; border-color: grey; border-style: solid;
+width: 250px">
+    <div style="padding: 10px;">
+        <div th:each="person : ${people}">
+            <a th:text="${person.getName()}"
+               th:href="@{/people/{id}(id=${person.getId()})}"></a>
+        </div>
+        <br/>
+        <hr/>
+        <a href="/people/new">Добавить человека</a>
+        <br>
+        <a href="/books">Список книг</a>
+    </div>
+
+</div>
+</body>
+</html>

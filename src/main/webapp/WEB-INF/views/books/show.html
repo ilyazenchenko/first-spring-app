@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Книга ' + book.getName()}"></title>
+</head>
+<body>
+<h1 style="margin-top: 100px; margin-left: 100px">Книга</h1>
+<div style="margin-left: 100px; margin-top: 15px; border-width:3px; border-color: grey; border-style: solid;
+width: 250px">
+    <div style="padding: 10px;"><p th:text="${'Название: ' + book.getName()}"></p>
+        <p th:text="${'Автор: ' + book.getAuthor()}"></p>
+        <p th:text="${'Год: ' + book.getPrintYear()}"></p>
+        <br/>
+
+        <a href="/books">Назад</a>
+        <br/>
+        <a th:href="@{/books/{id}/edit(id=${book.getBookId()})}">Редактировать</a>
+
+        <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getBookId()})}">
+            <input type="submit" value="Удалить">
+        </form>
+
+        <p><b>Владелец: </b></p>
+        <div th:if="${owner != null}">
+            <p th:text="${owner.getName()}"></p>
+            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getBookId()})}">
+                <input type="submit" value="Освободить">
+            </form>
+        </div>
+        <div th:if="${owner == null}">
+            <p>Книга свободна</p>
+            <form th:method="PATCH" th:action="@{/books/{id}/appoint(id=${book.getBookId()})}">
+                <label for="person">Назначить книгу</label>
+                <select th:object="${person}" th:field="*{id}" id="person">
+                    <option th:each="myperson : ${people}" th:value="${myperson.getId()}"
+                            th:text="${myperson.getName()}">
+                    </option>
+                </select>
+                <input type="submit" value="Назначить">
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
